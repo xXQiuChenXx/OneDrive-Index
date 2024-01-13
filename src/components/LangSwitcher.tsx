@@ -21,7 +21,7 @@ const LangSwitcher = () => {
         <Menu.Button className="flex items-center space-x-1.5 hover:opacity-80 dark:text-white">
           <IconLanguage height={20} width={20} />
           <p>Language</p>
-          <IconChevronDown height={20} width={20} />
+          <IconChevronDown height={16} width={20} />
         </Menu.Button>
 
         <Transition
