@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import FileListing from "@/components/FileListing";
 import LayoutSwitcher from "@/components/LayoutSwitcher";
 import Image from "next/image";
 
@@ -10,6 +11,7 @@ export default function Home() {
           <Breadcrumb />
           <LayoutSwitcher />
         </div>
+        <FileListing />
       </div>
     </div>
   );
