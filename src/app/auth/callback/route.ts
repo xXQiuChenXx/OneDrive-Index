@@ -1,12 +1,22 @@
 import { exchangeCode } from "@/utils/graphAPI";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
-  
-  if (!code) return new Response(request.url);
-  const data = await exchangeCode(code);
+  const error = searchParams.get("error");
 
-  return Response.json(data);
+  if (error) {
+    const desc = searchParams.get("error_description");
+    return;
+  }
+
+  if (!code) return redirect("/auth");
+  try {
+    const data = await exchangeCode(code);
+
+    return Response.json(data);
+  } catch (error) {
+    return redirect("/auth");
+  }
 }

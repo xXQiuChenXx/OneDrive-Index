@@ -10,6 +10,7 @@ const config = {
     "Files.Read.All",
     "Files.ReadWrite.All",
     "Files.ReadWrite.Selected",
+    "offline_access"
   ],
 };
 
