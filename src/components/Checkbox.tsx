@@ -1,4 +1,5 @@
 "use client"
+
 import { FC, MouseEventHandler, useEffect, useRef } from "react"
 
 export const Checkbox: FC<{
@@ -31,11 +32,11 @@ export const Checkbox: FC<{
     return (
       <span
         title={title}
-        className="inline-flex cursor-pointer items-center rounded  hover:bg-gray-300 dark:hover:bg-gray-600"
+        className="inline-flex cursor-pointer items-center rounded hover:bg-gray-300 dark:hover:bg-gray-600 mx-4"
         onClick={handleClick}
       >
         <input
-          className="form-check-input cursor-pointer"
+          className="form-check-input cursor-pointer h-[15px] w-[15px]"
           type="checkbox"
           value={checked ? '1' : ''}
           ref={ref}

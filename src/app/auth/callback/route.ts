@@ -1,4 +1,4 @@
-import { exchangeCode } from "@/utils/graphAPI";
+import { exchangeCode } from "@/utils/OAUTH_handler";
 import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {

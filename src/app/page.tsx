@@ -2,8 +2,11 @@ import Breadcrumb from "@/components/Breadcrumb";
 import FileListing from "@/components/FileListing";
 import LayoutSwitcher from "@/components/LayoutSwitcher";
 import Image from "next/image";
+import { getItems } from "@/utils/drive_req";
 
-export default function Home() {
+export default async function Home() {
+  const items = await getItems();
+
   return (
     <div className="mx-auto container">
       <div className="py-10 sm:p-10">
@@ -11,7 +14,7 @@ export default function Home() {
           <Breadcrumb />
           <LayoutSwitcher />
         </div>
-        <FileListing />
+        <FileListing items={items}/>
       </div>
     </div>
   );
