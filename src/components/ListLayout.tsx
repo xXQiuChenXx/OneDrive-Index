@@ -3,6 +3,7 @@ import React from "react";
 import { Checkbox } from "./Checkbox";
 import Link from "next/link";
 import { IconDots, IconFolder } from "@tabler/icons-react";
+import { formatFileSize, formatDate } from "@/utils/fileDetails";
 
 interface Props {
   items: any;
@@ -89,12 +90,12 @@ const ListLayout = ({
                 </div>
 
                 <div className="col-span-3 hidden flex-shrink-0 font-mono text-sm text-gray-700 dark:text-gray-500 md:block">
-                  {item.lastModifiedDateTime}
+                  {formatDate(item.lastModifiedDateTime)}
                   {/* {formatModifiedDateTime(c.lastModifiedDateTime)} */}
                 </div>
 
                 <div className="col-span-1 flex-shrink-0 truncate font-mono text-sm text-gray-700 dark:text-gray-500 md:block">
-                  {item.size}
+                  {formatFileSize(item.size)}
                   {/* {humanFileSize(c.size)} */}
                 </div>
 

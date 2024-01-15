@@ -8,6 +8,7 @@ export type OdItemsObject = {
   '@odata.context': string
   '@odata.nextLink'?: string
   value: Array<{
+    createdDateTime: string
     id: string
     name: string
     size: number
