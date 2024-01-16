@@ -18,6 +18,15 @@ export type OdItemsObject = {
     image?: OdImageFile
     video?: OdVideoFile
   }>
+  error?: {
+    code: string;
+    message: string;
+    innerError: {
+      date: string;
+      "request-id": string;
+      "client-request-id": string;
+    }
+  }
 }
 export type OdFolderChildren = OdItemsObject['value'][number]
 // A file object returned from the OneDrive API. This object may contain 'video' if the file is a video.

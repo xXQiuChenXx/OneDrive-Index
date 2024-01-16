@@ -8,16 +8,25 @@ import ListLayout from "@/components/ListLayout";
 import { SetStateAction, useState } from "react";
 import { OdItemsObject } from "@/types";
 
-const FileListing = ({ items }: { items: OdItemsObject["value"] }) => {
+const FileListing = ({
+  items,
+  pathname,
+}: {
+  items: OdItemsObject["value"];
+  pathname: string[];
+}) => {
   const [selected, setSelected] = useState<{ [key: string]: boolean }>({});
   const [totalSelected, setTotalSelected] = useState<0 | 1 | 2>(0);
   const [layout, setLayout] = useLocalStorage("preferredLayout", layouts[0]);
 
   const genTotalSelected = (selected: { [key: string]: boolean }) => {
-    const selectInfo = items.map(c => Boolean(selected[c.id]))
-    const [hasT, hasF] = [selectInfo.some(i => i), selectInfo.some(i => !i)]
-    return hasT && hasF ? 1 : !hasF ? 2 : 0
-  }
+    const selectInfo = items.map((c) => Boolean(selected[c.id]));
+    const [hasT, hasF] = [
+      selectInfo.some((i) => i),
+      selectInfo.some((i) => !i),
+    ];
+    return hasT && hasF ? 1 : !hasF ? 2 : 0;
+  };
 
   const toggleItemSelected = (id: string) => {
     let val: SetStateAction<{ [key: string]: boolean }>;
@@ -28,7 +37,7 @@ const FileListing = ({ items }: { items: OdItemsObject["value"] }) => {
       val = { ...selected, [id]: true };
     }
     setSelected(val);
-    setTotalSelected(genTotalSelected(val))
+    setTotalSelected(genTotalSelected(val));
   };
 
   const toggleTotalSelected = () => {
@@ -36,7 +45,7 @@ const FileListing = ({ items }: { items: OdItemsObject["value"] }) => {
       setSelected({});
       setTotalSelected(0);
     } else {
-      setSelected(Object.fromEntries(items.map(c => [c.id, true])));
+      setSelected(Object.fromEntries(items.map((c) => [c.id, true])));
       setTotalSelected(2);
     }
   };
@@ -51,6 +60,7 @@ const FileListing = ({ items }: { items: OdItemsObject["value"] }) => {
         <ListLayout
           selected={selected}
           items={items}
+          pathname={pathname}
           totalSelected={totalSelected}
           toggleItemSelected={toggleItemSelected}
           toggleTotalSelected={toggleTotalSelected}

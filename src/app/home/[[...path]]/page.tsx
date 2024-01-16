@@ -4,9 +4,8 @@ import LayoutSwitcher from "@/components/LayoutSwitcher";
 import Image from "next/image";
 import { getItems } from "@/utils/drive_req";
 
-export default async function Home({ params }: { params: { path: Array<string> } }) {
-  const items = await getItems();
-
+export default async function Home({ params }: { params: { path: Array<string>  } }) {
+  const items = await getItems(params.path);
   return (
     <div className="mx-auto container">
       <div className="py-10 sm:p-10">
@@ -14,7 +13,7 @@ export default async function Home({ params }: { params: { path: Array<string> }
           <Breadcrumb pathname={params.path} />
           <LayoutSwitcher />
         </div>
-        <FileListing items={items} />
+        <FileListing items={items}  pathname={params.path}/>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import type { ParsedUrlQuery } from "querystring";
 import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -25,14 +24,13 @@ const Breadcrumb = ({ pathname }: { pathname: Array<string> }) => {
               <Link
                 href={`/home/${pathname
                   .slice(0, pathname.length - i)
-                  .map((p) => encodeURIComponent(p))
                   .join("/")}`}
                 passHref
                 className={`ml-1 transition-all duration-75 hover:opacity-70 md:ml-3 ${
                   i == 0 && "pointer-events-none opacity-80"
                 }`}
               >
-                {p}
+                {decodeURIComponent(p)}
               </Link>
             </li>
           ))}

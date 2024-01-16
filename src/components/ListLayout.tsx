@@ -7,6 +7,7 @@ import { formatFileSize, formatDate } from "@/utils/fileDetails";
 
 interface Props {
   items: any;
+  pathname: string[];
   selected: { [key: string]: boolean };
   toggleTotalSelected: () => void;
   toggleItemSelected: (id: string) => void;
@@ -14,7 +15,8 @@ interface Props {
 }
 
 const ListLayout = ({
-  items,
+  items = [],
+  pathname,
   selected,
   totalSelected,
   toggleTotalSelected,
@@ -50,15 +52,16 @@ const ListLayout = ({
         </div>
       </div>
 
-      {items.map((item: any) => {
+      {items?.map((item: any) => {
         return (
           <div
             className="grid grid-cols-12 transition-all duration-100 hover:bg-gray-100 dark:hover:bg-gray-850"
             key={item.id}
           >
             <Link
-              //  href={`${path === '/' ? '' : path}/${encodeURIComponent(c.name)}`}
-              href="/"
+              href={`/home/${
+                pathname?.length ? pathname.join("/") : ""
+              }/${encodeURIComponent(item.name)}`}
               passHref
               className="col-span-12"
             >
