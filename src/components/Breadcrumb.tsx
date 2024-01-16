@@ -1,35 +1,30 @@
-"use client";
-
 import type { ParsedUrlQuery } from "querystring";
 import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 const HomeCrumb = () => {
   return (
-    <Link href="/" className="flex items-center">
+    <Link href="/home" className="flex items-center">
       <IconHome width={16} height={16} />
       <span className="ml-2 font-medium">Home</span>
     </Link>
   );
 };
 
-const Breadcrumb = () => {
-  const pathname = usePathname();
-  const path = pathname.split("/").filter((p) => p);
+const Breadcrumb = ({ pathname }: { pathname: Array<string> }) => {
 
-  if (path.length) {
+  if (pathname?.length) {
     return (
-      <ol className="no-scrollbar inline-flex flex-row-reverse items-center gap-1 overflow-x-scroll text-sm text-gray-600 dark:text-gray-300 md:gap-3">
-        {path
+      <ol className="no-scrollbar inline-flex flex-row-reverse items-center gap-1 overflow-hidden text-sm text-gray-600 dark:text-gray-300 md:gap-3">
+        {pathname
           .slice(0)
           .reverse()
           .map((p: string, i: number) => (
             <li key={i} className="flex flex-shrink-0 items-center">
               <IconChevronRight width={16} height={16} />
               <Link
-                href={`/${path
-                  .slice(0, path.length - i)
+                href={`/home/${pathname
+                  .slice(0, pathname.length - i)
                   .map((p) => encodeURIComponent(p))
                   .join("/")}`}
                 passHref
