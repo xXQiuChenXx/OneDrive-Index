@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(req: Request) {
-    const data = await prisma.auth.findMany();
+  const data = await prisma.auth.findMany();
 
-    return Response.json(data[0])
+  return Response.json(data[0]);
 }

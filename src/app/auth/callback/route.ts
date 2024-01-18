@@ -2,7 +2,11 @@ import { exchangeCode } from "@/utils/OAUTH_handler";
 import { notFound, redirect } from "next/navigation";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+
+  const { searchParams, host, origin } = new URL(request.url);
+
+  if(!origin.includes(host)) return;
+
   const code = searchParams.get("code");
   const error = searchParams.get("error");
 
@@ -13,17 +17,15 @@ export async function GET(request: Request) {
 
   if (!code) return notFound();
   const { access_token, refresh_token } = await exchangeCode(code);
-  const origin = request.url.replace("/auth/callback", "")
 
-  let response = await fetch(`${origin}/token`, {
+  let response = await fetch(`${origin}/auth/token`, {
     method: "POST",
-    body: new URLSearchParams({
+    body: JSON.stringify({
       access_token,
       refresh_token,
     }),
-  }).then(res => res.json());
+  }).then(res => res.json())
 
-  if(response?.success) redirect("/home");
+  if (response?.success) redirect("/home");
   notFound();
 }
-
