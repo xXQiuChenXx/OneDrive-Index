@@ -6,7 +6,7 @@ export const getItems = async (path?: string[]): Promise<any> => {
     (res) => res.json()
   );
 
-  if (!access_token || refresh_token)
+  if (!access_token || !refresh_token)
     throw new Error("Cannot Find Access Token");
 
   const url = getUrlFromPath(path?.join("/"));
