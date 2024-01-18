@@ -2,7 +2,7 @@ import { getUrlFromPath } from "@/libs/onedrive";
 import { exchangeToken } from "./OAUTH_handler";
 
 export const getItems = async (path?: string[]): Promise<any> => {
-  const { access_token, refresh_token } = await fetch("/auth/token").then(
+  const { access_token, refresh_token } = await fetch(process.env.NEXT_PUBLIC_URL + "/auth/token").then(
     (res) => res.json()
   );
 
