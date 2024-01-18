@@ -19,7 +19,7 @@ export const getItems = async (path?: string[]): Promise<any> => {
     return response.value;
   if (response.error.code === "InvalidAuthenticationToken") {
     let response = await exchangeToken(refresh_token);
-    await fetch("/auth/token", {
+    await fetch(process.env.NEXT_PUBLIC_URL + "/auth/token", {
       method: "POST",
       body: new URLSearchParams({
         access_token: response.access_token,
