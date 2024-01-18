@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   if (!code) return notFound();
   const { access_token, refresh_token } = await exchangeCode(code);
-  const origin = request.url.split("/")[0];
+  const origin = request.url.replace("/auth/callback", "")
 
   let response = await fetch(`${origin}/token`, {
     method: "POST",
