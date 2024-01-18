@@ -1,16 +1,33 @@
-import config from "@/config/api.config";
-const endpoint = "https://graph.microsoft.com/v1.0";
+import { getUrlFromPath } from "@/libs/onedrive";
+import { exchangeToken } from "./OAUTH_handler";
 
-export const getItems = async (path?: string[]) => {
-  const isRoot = path?.length ? `:`: ""
-  const url = `${endpoint}/me/drive/root${isRoot}${path?.length ? `/${path.join("/")}`: ""}${isRoot}/children`;
+export const getItems = async (path?: string[]): Promise<any> => {
+  const { access_token, refresh_token } = await fetch("/auth/token").then(
+    (res) => res.json()
+  );
+
+  if (!access_token || refresh_token)
+    throw new Error("Cannot Find Access Token");
+
+  const url = getUrlFromPath(path?.join("/"));
 
   const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${config.ACCESS_TOKEN}` },
+    headers: { Authorization: `Bearer ${access_token}` },
   }).then((res) => res.json());
 
-  if (response.error && response.error.code !== "itemNotFound") {
+  if (!response?.error || response?.error?.code === "itemNotFound")
+    return response.value;
+  if (response.error.code === "InvalidAuthenticationToken") {
+    let response = await exchangeToken(refresh_token);
+    await fetch("/auth/token", {
+      method: "POST",
+      body: new URLSearchParams({
+        access_token: response.access_token,
+        refresh_token: response.refresh_token,
+      }),
+    });
+    return await getItems(path);
+  } else {
     throw new Error(`${response.error.code}: ${response.error.message}`);
   }
-  return response.value;
 };

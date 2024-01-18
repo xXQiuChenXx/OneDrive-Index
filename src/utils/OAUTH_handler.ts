@@ -42,9 +42,9 @@ export const exchangeToken = async (refreshToken: string) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }
-  ).then((res) => (res.ok ? res.json() : ""));
+  ).then((res) => res.json());
 
-  if (!response || response?.error)
+  if (response?.error)
     throw new Error(
       response?.error ||
         "An error occured while exchanging token, please try again latter."
