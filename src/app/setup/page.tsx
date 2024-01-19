@@ -1,18 +1,29 @@
+import React from "react";
 import config from "@/config/api.config";
+import Steps from "@/components/Steps";
+import StepOne from "@/components/steps/StepOne";
+import StepTwo from "@/components/steps/StepTwo";
+import StepThree from "@/components/steps/StepThree";
 
 const Setup = () => {
-  const query = new URLSearchParams({
-    client_id: config.CLIENT_ID,
-    scope: config.SCOPES.join(" "),
-    response_type: "code",
-    redirect_uri: config.REDIRECT_URI,
-  });
-  const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${query.toString()}`;
+  const STEPS = [
+    {
+      title: "Step One",
+      component: <StepOne config={config}/>,
+    },
+    {
+      title: "Step Two",
+      component: <StepTwo />,
+    },
+    {
+      title: "Step Three",
+      component: <StepThree />,
+    },
+  ];
+ 
   return (
-    <div>
-      <a href={url}>
-        <button>Auth</button>
-      </a>
+    <div className="container mx-auto mt-10">
+      <Steps steps={STEPS} />
     </div>
   );
 };
