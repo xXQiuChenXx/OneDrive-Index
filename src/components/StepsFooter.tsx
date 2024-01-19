@@ -9,14 +9,11 @@ export default function StepsFooter({
   activeStep,
   maxStep,
   setActiveStep,
-  completed,
-  setCompleted
 }: {
   activeStep: number;
   maxStep: number;
   setActiveStep: Dispatch<SetStateAction<number>>;
-  completed: {[ k: number]: boolean};
-  setCompleted: Dispatch<SetStateAction<{[k: number]: boolean}>>;
+
 }) {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
