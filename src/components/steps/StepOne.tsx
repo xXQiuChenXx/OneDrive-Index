@@ -1,38 +1,57 @@
-"use client";
-import { Button, Checkbox } from "@mui/material";
+"use client"
+import { IconCircleCheckFilled, IconXboxX } from "@tabler/icons-react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 
-const StepOne = ({ config } : { config: any}) => {
-  const query = new URLSearchParams({
-    client_id: config.CLIENT_ID,
-    scope: config.SCOPES.join(" "),
-    response_type: "code",
-    redirect_uri: config.REDIRECT_URI,
-  });
-  const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${query.toString()}`;
+const StepOne = ({
+  config,
+  isDatabaseAvailable,
+  setDisabled,
+}: {
+  config: any;
+  isDatabaseAvailable: boolean;
+  setDisabled: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const missedConfig = Object.keys(config)
+    .map((key) => (config?.[key] ? null : config?.[key]))
+    .filter((x) => x !== null);
+
+  const isPassed = !missedConfig.length && isDatabaseAvailable;
+
+  useEffect(() => {
+    setDisabled(isPassed ? false : true);
+  }, [missedConfig, isDatabaseAvailable])
 
   return (
     <div>
-      <h1 className="text-gray-400 text-md">Step One</h1>
-      <h1 className="text-xl font-bold my-2">
-        Configure Your Graph API Client
-      </h1>
-      <div>
-        <p>
-          <Checkbox disabled checked required color="success" size="medium"/>
-          Client ID
-        </p>
-        <p>
-          <Checkbox disabled checked required />
-          Client Secret
-        </p>
-        <p>
-          <Checkbox disabled checked required />
-          Redirect URI
+      <h1 className="text-gray-400 text-md">Step 1</h1>
+      <h1 className="text-xl font-bold">Configuration Validation</h1>
+      <div className="mt-3  ">
+        {Object.keys(config).map((key, i) => {
+          return (
+            <p className="my-1" key={i + 1}>
+              {config?.[key] ? (
+                <IconCircleCheckFilled className="inline-block mr-3" />
+              ) : (
+                <IconXboxX className="inline-block mr-3" />
+              )}
+              {key}
+            </p>
+          );
+        })}
+        <p className="my-1">
+          {isDatabaseAvailable ? (
+            <IconCircleCheckFilled className="inline-block mr-3" />
+          ) : (
+            <IconXboxX className="inline-block mr-3" />
+          )}
+          Database
         </p>
       </div>
-      <div className="w-11/12 mt-5 mx-auto">
-        <Button variant="outlined" className="w-full" href={url} disabled>Authenticate with Microsoft</Button>
-      </div>
+      {isPassed ? (
+        <p className="text-green-600 text-center mt-3">*Congraturation! All your configuration are all setted!*</p>
+      ) : (
+        <p className="text-red-600 text-center mt-3">*Oops... Looks like your configuration having problem, please check again*</p>
+      )}
     </div>
   );
 };

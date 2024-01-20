@@ -1,29 +1,13 @@
-import React from "react";
 import config from "@/config/api.config";
 import Steps from "@/components/Steps";
-import StepOne from "@/components/steps/StepOne";
-import StepTwo from "@/components/steps/StepTwo";
-import StepThree from "@/components/steps/StepThree";
+import { testDBConnection } from "@/utils/requests";
 
-const Setup = () => {
-  const STEPS = [
-    {
-      title: "Step One",
-      component: <StepOne config={config}/>,
-    },
-    {
-      title: "Step Two",
-      component: <StepTwo />,
-    },
-    {
-      title: "Step Three",
-      component: <StepThree />,
-    },
-  ];
+const Setup = async () => {
+  const isDatabaseAvailable = await testDBConnection();
  
   return (
     <div className="container mx-auto mt-10">
-      <Steps steps={STEPS} />
+      <Steps config={config} isDatabaseAvailable={isDatabaseAvailable} />
     </div>
   );
 };

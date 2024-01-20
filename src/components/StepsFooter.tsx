@@ -9,14 +9,18 @@ export default function StepsFooter({
   activeStep,
   maxStep,
   setActiveStep,
+  setDisabled,
+  disabled,
 }: {
   activeStep: number;
   maxStep: number;
+  disabled: boolean;
+  setDisabled: Dispatch<SetStateAction<boolean>>;
   setActiveStep: Dispatch<SetStateAction<number>>;
-
 }) {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setDisabled(true);
   };
 
   const handleBack = () => {
@@ -35,7 +39,7 @@ export default function StepsFooter({
         <Button
           size="small"
           onClick={handleNext}
-          disabled={activeStep === (maxStep - 1)}
+          disabled={disabled}
         >
           Next
           <KeyboardArrowRight />

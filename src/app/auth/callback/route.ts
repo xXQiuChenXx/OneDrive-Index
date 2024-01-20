@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   if (!code) return notFound();
   const { access_token, refresh_token } = await exchangeCode(code);
 
-  let response = await fetch(`${origin}/auth/token`, {
+  let response = await fetch(`${origin}/api/auth`, {
     method: "POST",
     body: JSON.stringify({
       access_token,
