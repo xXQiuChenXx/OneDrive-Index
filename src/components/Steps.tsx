@@ -60,7 +60,7 @@ export default function Steps({
         ))}
       </Stepper>
       <div className="flex flex-col items-center my-10">
-        <div className="w-full md:w-6/12 border rounded-lg shadow-md p-5">
+        <div className="w-full lg:w-6/12 border rounded-lg shadow-md p-5">
           {steps[activeStep].component}
           <StepsFooter
             disabled={disabled}
