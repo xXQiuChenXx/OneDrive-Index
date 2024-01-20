@@ -1,18 +1,13 @@
 import config from "@/config/api.config";
+import Steps from "@/components/Steps";
+import { testDBConnection } from "@/utils/requests";
 
-const Setup = () => {
-  const query = new URLSearchParams({
-    client_id: config.CLIENT_ID,
-    scope: config.SCOPES.join(" "),
-    response_type: "code",
-    redirect_uri: config.REDIRECT_URI,
-  });
-  const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${query.toString()}`;
+const Setup = async () => {
+  const isDatabaseAvailable = await testDBConnection();
+ 
   return (
-    <div>
-      <a href={url}>
-        <button>Auth</button>
-      </a>
+    <div className="container mx-auto mt-10">
+      <Steps config={config} isDatabaseAvailable={isDatabaseAvailable} />
     </div>
   );
 };
