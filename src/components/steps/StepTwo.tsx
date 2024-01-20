@@ -48,7 +48,7 @@ const StepTwo = ({
           Client Secret
         </h4>
         <h4>
-          {data?.success ? (
+          {data?.refresh_token ? (
             <IconCircleCheckFilled className="inline-block mr-3" />
           ) : (
             <IconXboxX className="inline-block mr-3" />
@@ -56,7 +56,7 @@ const StepTwo = ({
           Refresh Token
         </h4>
         <h4>
-          {data?.success ? (
+          {data?.access_token ? (
             <IconCircleCheckFilled className="inline-block mr-3" />
           ) : (
             <IconXboxX className="inline-block mr-3" />
