@@ -39,5 +39,3 @@ next-env.d.ts
 
 prisma/migrations
 prisma/db
-
-test/test
